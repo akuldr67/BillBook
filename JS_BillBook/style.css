@@ -155,3 +155,51 @@ ion-icon {
     text-decoration: none;
     cursor: pointer;
   }
+
+  .addCustomerTable {
+      margin-top: 30px;
+      margin-left: 15px;
+  }
+
+
+  .addCustomerTable td {
+    padding: 10px 20px;
+    font-size: 18px;
+  }
+
+  .addCustomerTable input[type = text] {
+    padding: 8px 16px;
+    margin: 10px 0;
+  }
+
+  /* .addCustomerTable input[type = submit] {
+    padding: 10px 16px;
+    margin: 10px 10px;
+    background-color: #043e74;
+    color: #fff;
+    cursor: pointer;
+  } */
+
+  .customerSubmit, .itemSubmit {
+    padding: 10px 16px;
+    margin: 10px 10px;
+    background-color: #043e74;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .item-modal-data input[type = text],textarea {
+    padding: 8px 16px;
+    margin: 10px 5px;
+    width: 300px;
+  }
+
+  .item-modal-data textarea {
+      height: 60px;
+  }
+
+  .item-modal-data label {
+    padding: 20px 10px;
+    font-size: 18px;
+    margin-top: 20px;
+  }
