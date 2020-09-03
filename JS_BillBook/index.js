@@ -10,6 +10,10 @@ const clearRightPanel = () => {
     document.querySelector(DOMstrings.rightPanelList).innerHTML='';
 };
 
+const clearModal = () => {
+    document.querySelector('.modal-content').innerHTML = '';
+};
+
  const getCustomers = async () => {
     
     // get customers through api call
@@ -149,6 +153,23 @@ const renderInvoiceList = () => {
     });
 }
 
+const toggleModal = () => {
+        document.querySelector('.modal').classList.toggle('show-modal');
+}
+
+const addCustomer = () => {
+    clearModal();
+    const markup = `
+    <span class = "close-button"> &times; </span>
+    <div class = "customer-modal-data">
+        <h3> hello in customer modal</h3>
+    </div>
+    `;
+    document.querySelector('.modal-content').insertAdjacentHTML('afterbegin',markup);
+    toggleModal();
+    document.querySelector('.close-button').addEventListener('click',toggleModal);
+}
+
 const renderCustomers = () => {
     const markup = `
         <button class = "btn-customer">
@@ -164,6 +185,20 @@ const renderCustomers = () => {
         clearRightPanel();
         renderCustomers();
     });
+    document.querySelector('.btn-customer').addEventListener('click',addCustomer);
+};
+
+const addItem = () => {
+    clearModal();
+    const markup = `
+    <span class = "close-button"> &times; </span>
+    <div class = "item-modal-data">
+        <h3> hello in item modal</h3>
+    </div>
+    `;
+    document.querySelector('.modal-content').insertAdjacentHTML('afterbegin',markup);
+    toggleModal();
+    document.querySelector('.close-button').addEventListener('click',toggleModal);
 };
 
 const renderEntities = () => {
@@ -181,6 +216,20 @@ const renderEntities = () => {
         clearRightPanel();
         renderEntities();
     });
+    document.querySelector('.btn-item').addEventListener('click',addItem);
+};
+
+const addInvoice = () => {
+    clearModal();
+    const markup = `
+    <span class = "close-button"> &times; </span>
+    <div class = "invoice-modal-data">
+        <h3> hello in invoice modal</h3>
+    </div>
+    `;
+    document.querySelector('.modal-content').insertAdjacentHTML('afterbegin',markup);
+    toggleModal();
+    document.querySelector('.close-button').addEventListener('click',toggleModal);
 };
 
 const renderInvoices = () => {
@@ -198,6 +247,7 @@ const renderInvoices = () => {
         clearRightPanel();
         renderInvoices();
     });
+    document.querySelector('.btn-invoice').addEventListener('click',addInvoice);
 };
 
 document.querySelector('#customer').addEventListener('click', () => {
@@ -222,3 +272,14 @@ const init = () => {
 };
 
 init();
+
+
+// window.onclick = function(event){
+//     console.log('here');
+//     console.log(event);
+//     console.log(document.getElementsByClassName('.modal'));
+//     if(event.target == document.getElementsByClassName('.modal')){
+//         console.log(here);
+//         toggleModal();
+//     }
+// }
