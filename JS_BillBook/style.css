@@ -73,13 +73,16 @@ ion-icon {
     flex-direction: column;
 }
 
-.customerInfo {
+.customerInfo, .customerInfoOne {
     display: flex;
     justify-content: space-between;
+}
+
+.customerInfo {
     border-bottom: 1px solid rgb(184, 180, 180);
 }
 
-.customerNumber, .invoiceAmount {
+.customerNumber, .invoiceAmount, .customerCreatedAt {
     margin-right: 50px;
     font-size: 16px;
 }
@@ -88,11 +91,15 @@ ion-icon {
     font-size: 18px;
 }
 
-.invoiceName, .invoiceQuantity, .itemName, .itemAmount {
+.invoiceName, .invoiceQuantity, .itemName, .itemAmount, .itemCreatedAt {
     font-size: 16px;
 }
 
-.invoiceQuantity, .itemAmount{
+.itemDesc {
+    font-size: 14px;
+}
+
+.invoiceQuantity, .itemCreatedAt{
     margin-right: 50px;
 }
 
@@ -100,12 +107,16 @@ ion-icon {
     display: flex;
     justify-content: space-between;
 }
-.itemInfoHeading {
+.itemInfoHeading, .itemInfoTwo {
     border-bottom: 1px solid rgb(184, 180, 180);
 }
 
-.invoiceHeadingAmount, .itemAmountHeading {
-    margin-right: 15px;
+.itemAmount {
+    margin-left: 20px;
+}
+
+.invoiceHeadingAmount, .itemCreatedHeading {
+    margin-right: 35px;
     font-size: 16px;
 }
 
@@ -188,7 +199,7 @@ ion-icon {
     cursor: pointer;
   }
 
-  .item-modal-data input[type = text],textarea {
+  .item-modal-data input[type = text],.item-modal-data textarea {
     padding: 8px 16px;
     margin: 10px 5px;
     width: 300px;
@@ -202,4 +213,29 @@ ion-icon {
     padding: 20px 10px;
     font-size: 18px;
     margin-top: 20px;
+  }
+
+
+
+  .invoice-modal-section1, .invoice-modal-section3 {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .invoice-modal-items-table{
+      width: 100%;
+  }
+
+  .invoice-modal-section2 {
+      margin-top: 30px;
+  }
+
+  th.invoice-modal-items {
+      width: 50%;
+      text-align: left;
+  }
+
+  .invoice-modal-addItem {
+      margin: 30px auto;
+      display: block;
   }

@@ -5,6 +5,14 @@ const DOMstrings = {
     rightPanelList: '.rightPanel__list'
 };
 
+const convertDate =(time) => {
+    const date = new Date(time*1000);
+    const newDate = `${date.getDate()} ${date.toLocaleString('default',{month: 'short'})} ${date.getFullYear()}`;
+    // console.log(newDate);
+    return newDate;
+
+}
+
 const clearRightPanel = () => {
     document.querySelector(DOMstrings.header).innerHTML='';
     document.querySelector(DOMstrings.rightPanelList).innerHTML='';
@@ -39,10 +47,13 @@ const clearModal = () => {
 const renderCustomerItem = customer => {
     const markup = `
         <li>
+            <div class = "customerInfoOne">
             <h3 class = "customerName"> ${customer.name} </h3>
+            <h5 class = "customerNumber">Ph.: ${customer.contact} </h5>
+            </div>
             <div class = "customerInfo">
                 <p class = "customerMail"> ${customer.email} </p>
-                <h5 class = "customerNumber">Ph.: ${customer.contact} </h5>
+                <p class = "customerCreatedAt">Created: ${convertDate(customer.created_at)}</p>
             </div>
         </li>
     `;
@@ -81,6 +92,10 @@ const renderEntityItem = item => {
             <div class = "itemInfo">
                 <h5 class = "itemName"> ${item.name} </h5>
                 <h5 class = "itemAmount"> ${item.amount/100} </h5>
+                <h5 class = "itemCreatedAt"> ${convertDate(item.created_at)}</h5>
+            </div>
+            <div class = "itemInfoTwo">
+                <p class = "itemDesc">${item.description}</p>
             </div>
         </li>
     `;
@@ -96,6 +111,7 @@ const renderEntityList = () => {
         <div class = "itemInfoHeading">
             <h4 class = "itemNameHeading"> Item Name</h4>
             <h4 class = "itemAmountHeading"> Amount (in Rs.)</h4>
+            <h4 class = "itemCreatedHeading"> Added On</h4>
         </div>
         `;
         document.querySelector(DOMstrings.rightPanelList).insertAdjacentHTML('beforeend',markup);
@@ -244,7 +260,7 @@ const renderCustomers = () => {
     document.querySelector('.btn-customer').addEventListener('click',addCustomer);
 };
 
-const submitItem = async (event) => {
+const submitItem = async () => {
     let newItem = {
         name: "",
         description: "",
@@ -319,17 +335,76 @@ const renderEntities = () => {
     document.querySelector('.btn-item').addEventListener('click',addItem);
 };
 
+const submitInvoice = () => {
+    console.log("in submit invoice");
+}
+
 const addInvoice = () => {
     clearModal();
     const markup = `
     <span class = "close-button"> &times; </span>
     <div class = "invoice-modal-data">
-        <h3> hello in invoice modal</h3>
+        <h3> New Invoice </h3>
+        <div class = "invoice-modal-sections">
+            <div class = "invoice-modal-section1">
+                <div class = "invoice-section1-customer">
+                    <p>Bill to</p>
+                    <textarea> name, phone and address </textarea>
+                </div>
+                <div class = "invoice-section1-dates">
+                    <table class = "invoice-modal-dates-table">
+                        <tr>
+                        <td>
+                        <label for = "invoiceIssuedAt"> Issued At </label> <br/>
+                        <input type = "text" id = "invoiceIssuedAt" name = "invoiceIssuedAt" /> 
+                        </td>
+                        <td>
+                        <label for = "invoiceDueDate"> Due Date </label> <br/>
+                        <input type = "text" id = "invoiceDueDate" name = "invoiceDueDate" /> 
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>
+                        <label for = "invoiceNo"> Invoice Number </label> <br/>
+                        <input type = "text" id = "invoiceNo" name = "invoiceNo" /> 
+                        </td>
+                        <td>
+                        <label for = "invoiceRefNo"> Ref Number </label> <br/>
+                        <input type = "text" id = "invoiceRefNo" name = "invoiceRefNo" /> 
+                        </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class = "invoice-modal-section2">
+                <table class = "invoice-modal-items-table">
+                <tr>
+                    <th class = "invoice-modal-items">Items</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                </tr>
+                </table>
+                <button class = "invoice-modal-addItem"> Add item </button>
+            </div>
+            <div class = "invoice-modal-section3">
+                <div class = "invoice-section3-notes">
+                    <p>Notes</p>
+                    <textarea> Notes... </textarea>
+                </div>
+                <div class = "invoice-section3-amounts">
+                    <table class = "invoice-modal-amounts-table">
+                    </table>
+                </div>
+            </div>
+        </div>
+        
     </div>
     `;
     document.querySelector('.modal-content').insertAdjacentHTML('afterbegin',markup);
     toggleModal();
     document.querySelector('.close-button').addEventListener('click',toggleModal);
+    // document.querySelector('.invoiceSubmit').addEventListener('click',submitInvoice);
 };
 
 const renderInvoices = () => {
