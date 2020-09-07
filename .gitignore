@@ -1,0 +1,25 @@
+/my-app
+billbook_react/.gitignore
+.DS_Store
+
+# dependencies
+/billbook_react/node_modules
+/billbook_react/.pnp
+billbook_react/.pnp.js
+
+# testing
+/billbook_react/coverage
+
+# production
+/billbook_react/build
+
+# misc
+billbook_react/.DS_Store
+billbook_react/.env.local
+billbook_react/.env.development.local
+billbook_react/.env.test.local
+billbook_react/.env.production.local
+
+billbook_react/npm-debug.log*
+billbook_react/yarn-debug.log*
+billbook_react/yarn-error.log*
