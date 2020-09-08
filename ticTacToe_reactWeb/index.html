@@ -2,43 +2,18 @@
 <html>
     <head>
         <link type="text/css" rel="stylesheet" href="style.css">
-        <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script> -->
         <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <!-- <script type="text/jsx" src = "try.jsx"></script> -->
+        <script type="text/jsx" src = "Board.jsx"></script>
+        <script type="text/jsx" src = "Game.jsx"></script>
         <title>TicTacToe</title>
     </head>
     <body>
-        <div class="container">
-            <div class="left__panel">
-                <!-- <button class="entity"></button> -->
-                <ul class="entity__list">
-                    <div class="entity__name" id = "customer">
-                        <li> Customer </li>
-                    </div>
-                    <div class="entity__name" id = "item">
-                        <li> Item </li>
-                    </div>
-                    <div class="entity__name" id = "invoices">
-                        <li> Invoices </li>
-                    </div>
-                </ul>
-            </div>
-            <div class="right__panel">
-                <div class="header">
-                    <!-- <button> -->
-                </div>
-                <div class = "rightPanel__data">
-                    <ul class = "rightPanel__list">
-                        <!-- <li> -->
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class = "modal">
-            <div class = "modal-content">
-            </div>
-        </div>
-        <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
-        <script src = "index.js"></script>
+        <div id='root'></div>
+        <script type="text/babel">
+            ReactDOM.render(<Game />, document.getElementById('root'));
+        </script>
     </body>
 </html>
