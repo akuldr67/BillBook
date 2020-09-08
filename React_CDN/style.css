@@ -1,0 +1,241 @@
+ion-icon {
+    font-size: 18px;
+    color: blue;
+}
+
+.container{
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 10px 50px rgba(0,0,0,0.3);
+}
+
+.left__panel{
+    width: 30%;
+    height: 100%;
+    float: left;
+    background-color: #D0D0D0;
+}
+
+.entity__list{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.entity__name{
+    margin: 20px;
+    padding-left: -10px;
+    font-size: 20px;
+    border-bottom: 1px solid #fff;
+    cursor: pointer;
+}
+
+.right__panel{
+    width: 70%;
+    height: 100%;
+    float: right;
+    background-color: #F5F5F5;
+}
+
+.header{
+    width: 100%;
+    height: 10%;
+}
+
+.customer-refresh, .item-refresh, .invoice-refresh {
+    float: right;
+    margin: 10px;
+    cursor: pointer;
+    background-color: rgb(176, 176, 255);
+}
+
+.btn-customer, .btn-item, .btn-invoice {
+    background-color: #4299eb;
+    font-size: 18px;
+    float: right;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.rightPanel__data{
+    height: 90%;
+    width: 100%;
+    overflow: scroll;
+}
+
+.rightPanel__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.customerInfo, .customerInfoOne {
+    display: flex;
+    justify-content: space-between;
+}
+
+.customerInfo {
+    border-bottom: 1px solid rgb(184, 180, 180);
+}
+
+.customerNumber, .invoiceAmount, .customerCreatedAt {
+    margin-right: 50px;
+    font-size: 16px;
+}
+
+.customerMail {
+    font-size: 18px;
+}
+
+.invoiceName, .invoiceQuantity, .itemName, .itemAmount, .itemCreatedAt {
+    font-size: 16px;
+}
+
+.itemDesc {
+    font-size: 14px;
+}
+
+.invoiceQuantity, .itemCreatedAt{
+    margin-right: 50px;
+}
+
+.invoiceHeading, .invoiceInfo, .itemInfo, .itemInfoHeading {
+    display: flex;
+    justify-content: space-between;
+}
+.itemInfoHeading, .itemInfoTwo {
+    border-bottom: 1px solid rgb(184, 180, 180);
+}
+
+.itemAmount {
+    margin-left: 20px;
+}
+
+.invoiceHeadingAmount, .itemCreatedHeading {
+    margin-right: 35px;
+    font-size: 16px;
+}
+
+.invoiceCustomerName {
+    border-top: 1px solid rgb(184, 180, 180);
+    padding-top: 10px;
+}
+
+
+.modal {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    overflow: scroll;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+}
+
+.show-modal {
+    opacity: 1;
+    visibility: visible;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .addCustomerTable {
+      margin-top: 30px;
+      margin-left: 15px;
+  }
+
+
+  .addCustomerTable td {
+    padding: 10px 20px;
+    font-size: 18px;
+  }
+
+  .addCustomerTable input[type = text] {
+    padding: 8px 16px;
+    margin: 10px 0;
+  }
+
+  /* .addCustomerTable input[type = submit] {
+    padding: 10px 16px;
+    margin: 10px 10px;
+    background-color: #043e74;
+    color: #fff;
+    cursor: pointer;
+  } */
+
+  .customerSubmit, .itemSubmit {
+    padding: 10px 16px;
+    margin: 10px 10px;
+    background-color: #043e74;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .item-modal-data input[type = text],.item-modal-data textarea {
+    padding: 8px 16px;
+    margin: 10px 5px;
+    width: 300px;
+  }
+
+  .item-modal-data textarea {
+      height: 60px;
+  }
+
+  .item-modal-data label {
+    padding: 20px 10px;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+
+
+
+  .invoice-modal-section1, .invoice-modal-section3 {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .invoice-modal-items-table{
+      width: 100%;
+  }
+
+  .invoice-modal-section2 {
+      margin-top: 30px;
+  }
+
+  th.invoice-modal-items {
+      width: 50%;
+      text-align: left;
+  }
+
+  .invoice-modal-addItem {
+      margin: 30px auto;
+      display: block;
+  }
