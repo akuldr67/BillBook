@@ -147,8 +147,7 @@ class App extends React.Component {
     }
 
     customerClick(){
-        this.setState({loading: true});
-        this.setState({currentTab:0});
+        this.setState({loading: true, currentTab:0});
         try{
             fetch('https://rzp-training.herokuapp.com/team1/customers')
                 .then(res => res.json())
@@ -163,8 +162,7 @@ class App extends React.Component {
     }
 
     itemClick(){
-        this.setState({loading: true});
-        this.setState({currentTab:1});
+        this.setState({loading: true, currentTab:1});
         try{
             fetch('https://rzp-training.herokuapp.com/team1/items')
                 .then(res => res.json())
@@ -179,8 +177,7 @@ class App extends React.Component {
     }
 
     invoiceClick(){
-        this.setState({loading: true});
-        this.setState({currentTab:2});
+        this.setState({loading: true, currentTab:2});
         try{
             fetch('https://rzp-training.herokuapp.com/team1/invoices')
                 .then(res => res.json())
@@ -298,7 +295,7 @@ class App extends React.Component {
         else if(tab === 1){
             return (
                 <div className='modal-react'>
-                    <span className = "close-button"> &times; </span>
+                    <span className = "close-button" onClick={this.toggleModal}> &times; </span>
                     <div className = "item-modal-data">
                         <h2 className = "item-modal-heading"> New Item</h2>
                         <label htmlFor = "NewItemName"> Name </label> <br/>
@@ -314,7 +311,71 @@ class App extends React.Component {
         }
         
         else if(tab === 2){
-
+            return(
+                <div className = 'modal-react'>
+                    <span className = "close-button" onClick={this.toggleModal}> &times; </span>
+                    <div className = "invoice-modal-data">
+                        <h3> New Invoice </h3>
+                        <div className = "invoice-modal-sections">
+                            <div className = "invoice-modal-section1">
+                                <div className = "invoice-section1-customer">
+                                    <p>Bill to</p>
+                                    <textarea defaultValue = 'name, phone and address' /> 
+                                </div>
+                                <div className = "invoice-section1-dates">
+                                    <table className = "invoice-modal-dates-table">
+                                        <tbody>
+                                            <tr>
+                                            <td>
+                                            <label htmlFor = "invoiceIssuedAt"> Issued At </label> <br/>
+                                            <input type = "text" id = "invoiceIssuedAt" name = "invoiceIssuedAt" /> 
+                                            </td>
+                                            <td>
+                                            <label htmlFor = "invoiceDueDate"> Due Date </label> <br/>
+                                            <input type = "text" id = "invoiceDueDate" name = "invoiceDueDate" /> 
+                                            </td>
+                                            </tr>
+                                            <tr>
+                                            <td>
+                                            <label htmlFor = "invoiceNo"> Invoice Number </label> <br/>
+                                            <input type = "text" id = "invoiceNo" name = "invoiceNo" /> 
+                                            </td>
+                                            <td>
+                                            <label htmlFor = "invoiceRefNo"> Ref Number </label> <br/>
+                                            <input type = "text" id = "invoiceRefNo" name = "invoiceRefNo" /> 
+                                            </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div className = "invoice-modal-section2">
+                                <table className = "invoice-modal-items-table">
+                                    <tbody>
+                                        <tr>
+                                            <th className = "invoice-modal-items">Items</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button className = "invoice-modal-addItem"> Add item </button>
+                            </div>
+                            <div className = "invoice-modal-section3">
+                                <div className = "invoice-section3-notes">
+                                    <p>Notes</p>
+                                    <textarea defaultValue = 'Notes... ' />
+                                </div>
+                                <div className = "invoice-section3-amounts">
+                                    <table className = "invoice-modal-amounts-table">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
         }
         return '';
     }
@@ -331,13 +392,13 @@ class App extends React.Component {
                     <div className="left__panel">
                         <ul className="entity__list">
                             <div className="entity__name" id = "customer" onClick={()=> this.customerClick()}>
-                                <li> Customer </li>
+                                <li key = 'Customer'> Customer </li>
                             </div>
                             <div className="entity__name" id = "item" onClick={()=> this.itemClick()}>
-                                <li> Item </li>
+                                <li key = 'Item'> Item </li>
                             </div>
                             <div className="entity__name" id = "invoices" onClick={()=> this.invoiceClick()}>
-                                <li> Invoices </li>
+                                <li key = 'Invoice'> Invoices </li>
                             </div>
                         </ul>
                     </div>
