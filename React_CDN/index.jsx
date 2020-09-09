@@ -10,21 +10,38 @@ class App extends React.Component {
             tabs: ['customer','item','invoice'],
             currentTab: 0,
             loading: false,
+            isModalOpen: false,
         };
+
+
+        this.NewCustomerName = React.createRef();
+        this.NewCustomerPhone = React.createRef();
+        this.NewCustomerEmail = React.createRef();
+        this.NewItemName = React.createRef();
+        this.NewItemPrice = React.createRef();
+        this.NewItemDesc = React.createRef();
+
 
         this.renderHeader = this.renderHeader.bind(this);
         this.renderData = this.renderData.bind(this);
         this.customerClick = this.customerClick.bind(this);
         this.itemClick = this.itemClick.bind(this);
-        this.invoicesClick = this.invoicesClick.bind(this);
+        this.invoiceClick = this.invoiceClick.bind(this);
         this.showLoading = this.showLoading.bind(this);
+        this.refresh = this.refresh.bind(this);
+        this.addData = this.addData.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.submitCustomer = this.submitCustomer.bind(this);
+        this.submitItem = this.submitItem.bind(this);
     }
 
     componentDidMount() {
+        this.setState({loading:true});
         try{
             fetch('https://rzp-training.herokuapp.com/team1/customers')
                 .then(res => res.json())
-                .then(json => this.setState({data: json.items},()=>{console.log(this.state)}));
+                .then(json => this.setState({data: json.items, loading:false}));
         }catch(error){
             console.log('error in fetching customers');
             console.log(error);
@@ -38,15 +55,23 @@ class App extends React.Component {
     
     }
 
+    refresh(){
+        // this.setState(this.state);
+        const tab = this.state.currentTab;
+        if(tab === 0) this.customerClick();
+        else if(tab === 1) this.itemClick();
+        else this.invoiceClick();
+    }
+
     renderHeader(){
         const tab = this.state.currentTab;
         const tabName = this.state.tabs[tab];
         return (
             <div className = 'HeaderSecond'>
-                <button className = {`btn-${tabName}`}>
+                <button className = {`btn-${tabName}`} onClick = {() => { this.addData() } }>
                     Add {tabName}
                 </button>
-                <button className = {`${tabName}-refresh`}>
+                <button className = {`${tabName}-refresh`} onClick= {this.refresh} >
                     <ion-icon name = "refresh-outline"></ion-icon>
                 </button>
             </div>
@@ -72,19 +97,28 @@ class App extends React.Component {
         } 
         
         else if(tab===1){
-            return this.state.data.map(item => {
-                return (
-                    <li key={item.id}>
-                        <div className = "itemInfo">
-                            <h5 className = "itemName"> {item.name} </h5>
-                            <h5 className = "itemAmount"> {item.amount/100} </h5>
-                            <h5 className = "itemCreatedAt"> {this.convertDate(item.created_at)}</h5>
-                        </div>
-                        <div className = "itemInfoTwo">
-                            <p className = "itemDesc">{item.description}</p>
-                        </div>
-                    </li>)
-            });
+            return (
+                <div className = "item-react">
+                    <div className = "itemInfoHeading">
+                        <h4 className = "itemNameHeading"> Item Name</h4>
+                        <h4 className = "itemAmountHeading"> Amount (in Rs.)</h4>
+                        <h4 className = "itemCreatedHeading"> Added On</h4>
+                    </div>
+                    {this.state.data.map(item => {
+                    return (
+                        <li key={item.id}>
+                            <div className = "itemInfo">
+                                <h5 className = "itemName"> {item.name} </h5>
+                                <h5 className = "itemAmount"> {item.amount/100} </h5>
+                                <h5 className = "itemCreatedAt"> {this.convertDate(item.created_at)}</h5>
+                            </div>
+                            <div className = "itemInfoTwo">
+                                <p className = "itemDesc">{item.description}</p>
+                            </div>
+                        </li>)
+                    })}
+                </div>
+            );
         }
         
         else if(tab===2){
@@ -118,7 +152,7 @@ class App extends React.Component {
         try{
             fetch('https://rzp-training.herokuapp.com/team1/customers')
                 .then(res => res.json())
-                .then(json => this.setState({data: json.items},()=>{console.log(this.state);
+                .then(json => this.setState({data: json.items},()=>{
                 this.setState({loading: false});
                 }));
         }catch(error){
@@ -134,7 +168,7 @@ class App extends React.Component {
         try{
             fetch('https://rzp-training.herokuapp.com/team1/items')
                 .then(res => res.json())
-                .then(json => this.setState({data: json.items},()=>{console.log(this.state);
+                .then(json => this.setState({data: json.items},()=>{
                 this.setState({loading: false});
                 }));
         }catch(error){
@@ -144,13 +178,13 @@ class App extends React.Component {
         }
     }
 
-    invoicesClick(){
+    invoiceClick(){
         this.setState({loading: true});
         this.setState({currentTab:2});
         try{
             fetch('https://rzp-training.herokuapp.com/team1/invoices')
                 .then(res => res.json())
-                .then(json => this.setState({data: json.items},()=>{console.log(this.state);
+                .then(json => this.setState({data: json.items},()=>{
                 this.setState({loading: false});
                 }));
         }catch(error){
@@ -162,6 +196,131 @@ class App extends React.Component {
 
     showLoading(){
         return(<div className="loading">Loading...</div>);
+    }
+
+    toggleModal(){
+        this.setState({isModalOpen: false});
+    }
+
+    submitCustomer(){
+        let newCustomer = {
+            name: this.NewCustomerName.current.value,
+            email: this.NewCustomerEmail.current.value,
+            contact: this.NewCustomerPhone.current.value
+        };
+        try{
+            fetch('https://rzp-training.herokuapp.com/team1/customers',{
+                method: "POST",
+                body: JSON.stringify(newCustomer),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            }).then(res => {
+                this.toggleModal();
+                if(res.status === 200){
+                    alert('Customer Added Successfully');
+                }else{
+                    alert('Unable to add Customer');
+                }
+                this.refresh();
+            });
+        }catch (error){
+            console.log(error);
+            alert('Unable to add Customer');
+            this.toggleModal();
+        };
+    }
+
+    submitItem(){
+        let newItem = {
+            name: this.NewItemName.current.value,
+            description: this.NewItemDesc.current.value,
+            amount: this.NewItemPrice.current.value*100,
+            currency: "INR"
+        };
+        try{
+            fetch('https://rzp-training.herokuapp.com/team1/items',{
+                method: "POST",
+                body: JSON.stringify(newItem),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            }).then(res => {
+                this.toggleModal();
+                if(res.status === 200){
+                    alert('Item Added Successfully');
+                }else{
+                    alert('Unable to add Item');
+                }
+                this.refresh();
+            });
+        }catch (error){
+            console.log(error);
+            alert('Unable to add Item');
+            this.toggleModal();
+        };
+    }
+
+    showModal(){
+        const tab = this.state.currentTab;
+        if(tab === 0){
+            return (
+                <div className = 'modal-react'>
+                    <span className = "close-button" onClick={this.toggleModal}> &times; </span>
+                    <div className = "customer-modal-data">
+                        <h2 className = "customer-modal-heading"> New Customer</h2>
+                            <table className = "addCustomerTable">
+                                <tbody>
+                                    <tr>
+                                    <td> <label htmlFor= "NewCustomerName"> Name </label> <br />
+                                    <input type = "text" id = "NewCustomerName" name = "NewCustomerName" ref = {this.NewCustomerName} />
+                                    </td>
+                                    <td>
+                                    <label htmlFor = "NewCustomerPhone"> Phone </label> <br />
+                                    <input type = "text" id = "NewCustomerPhone" name = "NewCustomerPhone" ref = {this.NewCustomerPhone}/> 
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                    <td> <label htmlFor= "NewCustomerEmail"> Email </label> <br />
+                                    <input type = "text" id = "NewCustomerEmail" name = "NewCustomerEmail" ref = {this.NewCustomerEmail}/>
+                                    </td>
+                                    <td>
+                                    <button className = "customerSubmit" onClick={this.submitCustomer}> Save Customer </button>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+            );
+        }
+        
+        else if(tab === 1){
+            return (
+                <div className='modal-react'>
+                    <span className = "close-button"> &times; </span>
+                    <div className = "item-modal-data">
+                        <h2 className = "item-modal-heading"> New Item</h2>
+                        <label htmlFor = "NewItemName"> Name </label> <br/>
+                        <input type = "text" id = "NewItemName" name = "NewItemName" ref = {this.NewItemName} /> <br/>
+                        <label htmlFor = "NewItemPrice"> Price (in Rs.)</label> <br/>
+                        <input type = "text" id = "NewItemPrice" name = "NewItemPrice" ref = {this.NewItemPrice} /> <br/>
+                        <label htmlFor = "NewItemDesc"> Description </label> <br/>
+                        <textarea type = "text" id = "NewItemDesc" name = "NewItemDesc" ref = {this.NewItemDesc}/> <br/>
+                        <button className = "itemSubmit" onClick = {this.submitItem}> Save Item </button>
+                    </div>
+                </div>
+            );
+        }
+        
+        else if(tab === 2){
+
+        }
+        return '';
+    }
+
+    addData(){
+        this.setState({isModalOpen: true});
     }
 
     render() {
@@ -177,7 +336,7 @@ class App extends React.Component {
                             <div className="entity__name" id = "item" onClick={()=> this.itemClick()}>
                                 <li> Item </li>
                             </div>
-                            <div className="entity__name" id = "invoices" onClick={()=> this.invoicesClick()}>
+                            <div className="entity__name" id = "invoices" onClick={()=> this.invoiceClick()}>
                                 <li> Invoices </li>
                             </div>
                         </ul>
@@ -193,8 +352,9 @@ class App extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className = "modal">
+                <div className = {this.state.isModalOpen? 'modal show-modal':'modal'}>
                     <div className = "modal-content">
+                        {this.state.isModalOpen? this.showModal():''}
                     </div>
                 </div>
             </div>
