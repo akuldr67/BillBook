@@ -307,7 +307,7 @@ const addItem = () => {
         <label for = "NewItemPrice"> Price (in Rs.)</label> <br/>
         <input type = "text" id = "NewItemPrice" name = "NewItemPrice" /> <br/>
         <label for = "NewItemDesc"> Description </label> <br/>
-        <textarea type = "text" id = "NewItemDesc" name = "NewItemDesc" /> </textarea> <br/>
+        <textarea type = "text" id = "NewItemDesc" name = "NewItemDesc" > </textarea> <br/>
         <button class = "itemSubmit"> Save Item </button>
     </div>
     `;
